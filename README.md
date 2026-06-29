@@ -17,6 +17,7 @@ Total Records: 4,521 Customers
 The dataset contains customer demographic information, financial characteristics, and the outcome of a direct marketing campaign.
 
 Key Fields
+
 Age
 Job
 Marital Status
