@@ -70,11 +70,3 @@ DAX
 Power BI
 Marketing Analytics
 Business Intelligence
-
-Bank-Marketing-Analysis/
-│
-├── README.md
-├── BankMarketing.pbix
-├── SQL/
-├── Images/
-└── Data/
