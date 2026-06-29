@@ -1,0 +1,121 @@
+## SQL Analysis
+
+Google BigQuery was used to explore and analyze the marketing campaign dataset before building the Power BI dashboard.
+
+### Total Customers
+
+```sql
+-- Count the total number of customers
+
+SELECT COUNT(*) AS total_customers
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`;
+```
+
+---
+
+### Overall Conversion Rate
+
+```sql
+-- Calculate overall campaign conversion rate
+
+SELECT
+    COUNT(*) AS total_customers,
+    SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) AS subscribed_customers,
+    ROUND(
+        100 * SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS conversion_rate_percent
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`;
+```
+
+---
+
+### Conversion Rate by Job
+
+```sql
+-- Analyze conversion rate by customer occupation
+
+SELECT
+    job,
+    COUNT(*) AS customers,
+    SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) AS subscriptions,
+    ROUND(
+        100 * SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS conversion_rate_percent
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`
+GROUP BY job
+ORDER BY conversion_rate_percent DESC;
+```
+
+---
+
+### Conversion Rate by Age Group
+
+```sql
+-- Analyze conversion rate by age group
+
+SELECT
+    CASE
+        WHEN age < 30 THEN 'Under 30'
+        WHEN age BETWEEN 30 AND 39 THEN '30-39'
+        WHEN age BETWEEN 40 AND 49 THEN '40-49'
+        WHEN age BETWEEN 50 AND 59 THEN '50-59'
+        ELSE '60+'
+    END AS age_group,
+
+    COUNT(*) AS customers,
+
+    SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) AS subscriptions,
+
+    ROUND(
+        100 * SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS conversion_rate_percent
+
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`
+
+GROUP BY age_group
+
+ORDER BY age_group;
+```
+
+---
+
+### Housing Loan Analysis
+
+```sql
+-- Compare conversion rates by housing loan status
+
+SELECT
+    housing,
+    COUNT(*) AS customers,
+    SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) AS subscriptions,
+    ROUND(
+        100 * SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS conversion_rate_percent
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`
+GROUP BY housing
+ORDER BY housing;
+```
+
+---
+
+### Personal Loan Analysis
+
+```sql
+-- Compare conversion rates by personal loan status
+
+SELECT
+    loan,
+    COUNT(*) AS customers,
+    SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) AS subscriptions,
+    ROUND(
+        100 * SUM(CASE WHEN y = TRUE THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS conversion_rate_percent
+FROM `probable-splice-491316-k1.Bank_marketing.MarketingData`
+GROUP BY loan
+ORDER BY loan;
+```
